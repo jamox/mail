@@ -98,10 +98,11 @@ module Mail
     def Encodings.decode_encode(str, output_type)
       case
       when output_type == :decode
-        Encodings.value_decode(str)
+        str = Encodings.value_decode(str)
+        str.gsub("\\\"", "\"")
       else
         if str.ascii_only?
-          str
+          str.gsub("\"", "\\\"")
         else
           Encodings.b_value_encode(str, find_encoding(str))
         end
